@@ -128,6 +128,17 @@ const locales = {
   cis_ru: { ietf: 'ru', tk: 'qxw8hzm.css' },
 };
 
+const stageDomainsMap = {
+  'www.adobe.com': 'www.stage.adobe.com',
+  'business.adobe.com': 'business.stage.adobe.com',
+  'learning.adobe.com': 'learning.stage.adobe.com',
+  'helpx.adobe.com': 'helpx.stage.adobe.com',
+  'status.adobe.com': 'status.stage.adobe.com',
+  'news.adobe.com': 'news.stage.adobe.com',
+  'blog.adobe.com': 'blog.stage.adobe.com',
+  'developer.adobe.com': 'developer-stage.adobe.com',
+};
+
 // Add any config options.
 const CONFIG = {
   ...ENVS,
@@ -136,6 +147,7 @@ const CONFIG = {
   contentRoot: '/homepage',
   imsClientId: 'homepage_milo',
   prodDomains: ['stock.adobe.com', 'helpx.adobe.com', 'business.adobe.com', 'www.adobe.com'],
+  stageDomainsMap,
   geoRouting: 'on',
   fallbackRouting: 'on',
   locales,
@@ -206,6 +218,10 @@ const getCookie = (name) => document.cookie
   ?.split('=')[1];
 
 async function imsCheck() {
+  const { host, pathname } = window.location;
+  // no need to check IMS for these cases:
+  if (!host.includes('adobe.com') || pathname.split('/').at(-1).startsWith('media_')) return false;
+  
   const { loadIms, setConfig } = await import(`${miloLibs}/utils/utils.js`);
   setConfig({ ...CONFIG, miloLibs });
   let isSignedInUser = false;
@@ -274,7 +290,7 @@ function loadStyles() {
         document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};`;
         document.cookie = `${ACOM_SIGNED_IN_STATUS}=;path=/;expires=${new Date(0).toUTCString()};domain=adobe.com;`;
       } else {
-        document.cookie = `${ACOM_SIGNED_IN_STATUS_STAGE}=;path=/;expires=${new Date(0).toUTCString()};domain='www.stage.adobe.com;`;
+        document.cookie = `${ACOM_SIGNED_IN_STATUS_STAGE}=;path=/;expires=${new Date(0).toUTCString()};domain=www.stage.adobe.com;`;
       }
       window.location.reload();
     }
