@@ -26,7 +26,7 @@
       "environments": [
         "edit"
       ],
-      "url": "https://main--milo--adobecom.hlx.page/tools/loc/index.html?project=homepage-pink--adobecom",
+      "url": "https://main--milo--adobecom.aem.page/tools/loc/index.html?project=homepage-pink--adobecom",
       "passReferrer": true,
       "passConfig": true,
       "excludePaths": [ "/**" ],
@@ -37,7 +37,7 @@
       "id": "localize-2",
       "title": "Localize (V2)",
       "environments": [ "edit" ],
-      "url": "https://main--homepage-pink--adobecom.hlx.page/tools/loc?milolibs=locui",
+      "url": "https://main--homepage-pink--adobecom.aem.page/tools/loc?milolibs=locui",
       "passReferrer": true,
       "passConfig": true,
       "includePaths": [ "**.xlsx**" ]
